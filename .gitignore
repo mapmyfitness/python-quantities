@@ -7,3 +7,5 @@ doc/reference/generated
 doc/_build/*
 .eric4project
 .ropeproject
+*.egg-info
+RELEASE-VERSION

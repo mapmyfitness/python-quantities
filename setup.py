@@ -73,6 +73,18 @@ if __version__ != cfg.get('metadata', 'version'):
                 line = 'version = %s\n' % __version__
             f.write(line)
 
+
+import sys
+
+if 'sdist' in sys.argv:
+    import mmf_release_tools
+    version = mmf_release_tools.generate_release_version(cfg.get('metadata', 'version'), __file__)
+    mmf_release_tools.write_release_version(version)
+else:
+    with open("RELEASE-VERSION", "r") as f:
+        version = f.readlines()[0].strip()
+
+
 setup(
     author = cfg.get('metadata', 'author'),
     author_email = cfg.get('metadata', 'author_email'),
@@ -97,6 +109,6 @@ setup(
     requires = cfg.get('metadata', 'requires').split('\n'),
     test_suite = 'nose.collector',
     url = cfg.get('metadata', 'url'),
-    version = cfg.get('metadata', 'version'),
+    version = version,
     zip_safe = cfg.getboolean('metadata', 'zip_safe'),
 )
